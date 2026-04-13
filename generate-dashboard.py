@@ -276,51 +276,55 @@ def build_html(data):
   <title>Weber Cost Dashboard</title>
   <style>
     :root {
-      --bg: #f4f7fb;
+      --bg: #eef3f9;
       --surface: #ffffff;
-      --surface-alt: #f8fbff;
-      --ink: #142033;
-      --muted: #607089;
-      --line: #dbe4f0;
-      --header: #0f1b2d;
-      --header-2: #183252;
-      --accent: #2f80ed;
-      --accent-strong: #1668d7;
-      --accent-soft: rgba(47, 128, 237, 0.12);
+      --surface-alt: #f4f8fc;
+      --ink: #132033;
+      --muted: #617086;
+      --line: #d7e1ec;
+      --header: #0d1726;
+      --header-2: #19304c;
+      --accent: #2874d9;
+      --accent-strong: #145dc2;
+      --accent-soft: rgba(40, 116, 217, 0.12);
       --good: #14804a;
-      --shadow: 0 18px 40px rgba(15, 27, 45, 0.08);
+      --shadow: 0 18px 40px rgba(13, 23, 38, 0.08);
       --radius: 18px;
+      --touch-target: 44px;
     }
 
     * { box-sizing: border-box; }
+    html { font-size: 16px; }
     html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
     body { min-height: 100vh; }
     button, input, select { font: inherit; }
+    button { min-height: var(--touch-target); }
 
     .shell {
       min-height: 100vh;
       background:
-        radial-gradient(circle at top right, rgba(47, 128, 237, 0.18), transparent 28%),
-        linear-gradient(180deg, var(--header) 0, var(--header-2) 340px, var(--bg) 340px, var(--bg) 100%);
+        radial-gradient(circle at top right, rgba(40, 116, 217, 0.18), transparent 26%),
+        linear-gradient(180deg, var(--header) 0, var(--header-2) 320px, var(--bg) 320px, var(--bg) 100%);
     }
 
     .container {
-      width: min(1220px, calc(100vw - 32px));
+      width: min(1220px, calc(100vw - 24px));
       margin: 0 auto;
-      padding: 28px 0 40px;
+      padding: 18px 0 28px;
     }
 
     .hero {
       color: #fff;
-      padding: 6px 0 28px;
+      padding: 2px 0 22px;
     }
 
     .hero-top {
       display: flex;
+      flex-direction: column;
       justify-content: space-between;
-      gap: 16px;
+      gap: 14px;
       align-items: flex-start;
-      margin-bottom: 24px;
+      margin-bottom: 18px;
     }
 
     .eyebrow {
@@ -331,14 +335,14 @@ def build_html(data):
       border-radius: 999px;
       background: rgba(255, 255, 255, 0.12);
       color: rgba(255, 255, 255, 0.9);
-      font-size: 13px;
+      font-size: 0.875rem;
       letter-spacing: 0.02em;
     }
 
     h1 {
-      margin: 14px 0 8px;
-      font-size: clamp(2rem, 4vw, 3rem);
-      line-height: 1;
+      margin: 12px 0 10px;
+      font-size: clamp(2rem, 5vw, 3rem);
+      line-height: 0.98;
       letter-spacing: -0.04em;
     }
 
@@ -346,24 +350,30 @@ def build_html(data):
       margin: 0;
       max-width: 760px;
       color: rgba(255, 255, 255, 0.78);
-      font-size: 15px;
-      line-height: 1.6;
+      font-size: 1rem;
+      line-height: 1.55;
     }
 
     .hero-actions {
       display: flex;
+      width: 100%;
       gap: 10px;
-      align-items: center;
+      align-items: stretch;
       flex-wrap: wrap;
-      justify-content: flex-end;
+      justify-content: flex-start;
     }
 
     .button {
       border: 0;
-      border-radius: 12px;
-      padding: 11px 16px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 14px;
+      padding: 12px 16px;
       cursor: pointer;
       transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+      font-size: 1rem;
+      line-height: 1.2;
     }
 
     .button:hover { transform: translateY(-1px); }
@@ -378,32 +388,43 @@ def build_html(data):
       color: #fff;
       border: 1px solid rgba(255, 255, 255, 0.14);
     }
+    .button.ghost {
+      background: var(--surface-alt);
+      color: var(--ink);
+      border: 1px solid var(--line);
+      font-weight: 600;
+    }
 
     .toolbar {
       display: flex;
+      flex-direction: column;
       gap: 12px;
-      align-items: center;
+      align-items: stretch;
       flex-wrap: wrap;
-      margin-top: 22px;
+      margin-top: 18px;
     }
 
     .pill-group {
-      display: inline-flex;
+      display: flex;
+      flex-wrap: wrap;
       gap: 8px;
       padding: 8px;
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 999px;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.12);
+      border-radius: 20px;
       backdrop-filter: blur(16px);
     }
 
     .pill {
       border: 0;
       border-radius: 999px;
-      padding: 9px 14px;
+      min-height: var(--touch-target);
+      padding: 10px 16px;
       background: transparent;
       color: rgba(255, 255, 255, 0.72);
       cursor: pointer;
       font-weight: 600;
+      font-size: 1rem;
     }
 
     .pill.active {
@@ -414,7 +435,7 @@ def build_html(data):
 
     .timestamp {
       color: rgba(255, 255, 255, 0.72);
-      font-size: 13px;
+      font-size: 1rem;
     }
 
     .grid {
@@ -423,9 +444,9 @@ def build_html(data):
     }
 
     .summary {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      margin-top: -6px;
-      margin-bottom: 24px;
+      grid-template-columns: 1fr;
+      margin-top: -2px;
+      margin-bottom: 18px;
     }
 
     .card, .panel {
@@ -436,19 +457,19 @@ def build_html(data):
     }
 
     .card {
-      padding: 20px;
+      padding: 18px;
     }
 
     .metric-label {
       color: var(--muted);
-      font-size: 13px;
+      font-size: 0.8rem;
       text-transform: uppercase;
       letter-spacing: 0.06em;
       margin-bottom: 10px;
     }
 
     .metric-value {
-      font-size: clamp(1.6rem, 2.3vw, 2.2rem);
+      font-size: clamp(1.8rem, 7vw, 2.2rem);
       line-height: 1.1;
       letter-spacing: -0.04em;
       margin-bottom: 8px;
@@ -457,51 +478,101 @@ def build_html(data):
 
     .metric-meta {
       color: var(--muted);
-      font-size: 13px;
+      font-size: 1rem;
     }
 
     .panel {
       overflow: hidden;
-      margin-bottom: 20px;
+      margin-bottom: 18px;
     }
 
     .panel-head {
       display: flex;
+      flex-direction: column;
       justify-content: space-between;
       gap: 12px;
-      align-items: center;
-      padding: 20px 22px 14px;
+      align-items: flex-start;
+      padding: 18px 18px 12px;
     }
 
     .panel-title {
       margin: 0;
-      font-size: 1.05rem;
+      font-size: 1.1rem;
       letter-spacing: -0.02em;
     }
 
     .panel-subtitle {
       margin: 5px 0 0;
       color: var(--muted);
-      font-size: 14px;
+      font-size: 1rem;
+      line-height: 1.45;
+    }
+
+    .panel-actions {
+      display: flex;
+      width: 100%;
+      justify-content: flex-start;
+    }
+
+    .table-tools {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 0 18px 10px;
+    }
+
+    .scroll-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--muted);
+      font-size: 0.85rem;
+      white-space: nowrap;
+    }
+
+    .mobile-only {
+      display: inline-flex;
     }
 
     .table-wrap {
+      position: relative;
       overflow: auto;
       border-top: 1px solid var(--line);
+      -webkit-overflow-scrolling: touch;
+      scroll-behavior: smooth;
+      overscroll-behavior-x: contain;
+      scrollbar-gutter: stable both-edges;
+    }
+
+    .table-wrap::after {
+      content: "";
+      position: sticky;
+      right: 0;
+      top: 0;
+      float: right;
+      width: 28px;
+      height: 100%;
+      pointer-events: none;
+      background: linear-gradient(270deg, rgba(244, 248, 252, 0.98) 0%, rgba(244, 248, 252, 0) 100%);
+    }
+
+    .table-wrap.scrolled-end::after {
+      opacity: 0;
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
-      min-width: 860px;
+      min-width: 720px;
     }
 
     th, td {
-      padding: 14px 16px;
+      padding: 13px 14px;
       border-bottom: 1px solid var(--line);
       text-align: left;
       vertical-align: top;
-      font-size: 14px;
+      font-size: 1rem;
     }
 
     th {
@@ -509,7 +580,7 @@ def build_html(data):
       top: 0;
       background: var(--surface-alt);
       color: var(--muted);
-      font-size: 12px;
+      font-size: 0.75rem;
       text-transform: uppercase;
       letter-spacing: 0.06em;
       z-index: 1;
@@ -539,7 +610,8 @@ def build_html(data):
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      padding: 7px 10px;
+      min-height: 34px;
+      padding: 7px 12px;
       border-radius: 999px;
       background: var(--accent-soft);
       color: var(--accent-strong);
@@ -549,11 +621,13 @@ def build_html(data):
     .prompt-button {
       border: 0;
       background: transparent;
+      min-height: var(--touch-target);
       padding: 0;
       color: var(--accent-strong);
       cursor: pointer;
       text-align: left;
       line-height: 1.45;
+      font-size: 1rem;
     }
 
     .prompt-button:hover {
@@ -565,9 +639,9 @@ def build_html(data):
     }
 
     .empty {
-      padding: 24px 22px 30px;
+      padding: 22px 18px 26px;
       color: var(--muted);
-      font-size: 14px;
+      font-size: 1rem;
     }
 
     .modal-backdrop {
@@ -590,7 +664,7 @@ def build_html(data):
       max-height: min(80vh, 900px);
       overflow: auto;
       background: #fff;
-      border-radius: 22px;
+      border-radius: 20px;
       box-shadow: 0 26px 60px rgba(0, 0, 0, 0.24);
     }
 
@@ -599,12 +673,12 @@ def build_html(data):
       justify-content: space-between;
       gap: 12px;
       align-items: center;
-      padding: 20px 22px 12px;
+      padding: 18px 18px 12px;
       border-bottom: 1px solid var(--line);
     }
 
     .modal-body {
-      padding: 20px 22px 24px;
+      padding: 18px 18px 22px;
     }
 
     .modal pre {
@@ -613,7 +687,7 @@ def build_html(data):
       word-break: break-word;
       line-height: 1.6;
       font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-      font-size: 13px;
+      font-size: 0.9rem;
       color: #1d2c40;
     }
 
@@ -621,8 +695,8 @@ def build_html(data):
       border: 0;
       background: #eef4fb;
       color: var(--ink);
-      width: 36px;
-      height: 36px;
+      width: var(--touch-target);
+      height: var(--touch-target);
       border-radius: 999px;
       cursor: pointer;
       font-size: 18px;
@@ -631,21 +705,136 @@ def build_html(data):
     .footnote {
       margin-top: 10px;
       color: var(--muted);
-      font-size: 13px;
+      font-size: 1rem;
+      line-height: 1.55;
     }
 
-    @media (max-width: 980px) {
-      .summary { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .hero-top { flex-direction: column; }
-      .hero-actions { justify-content: flex-start; }
+    .recent-table .mobile-optional {
+      display: none;
     }
 
-    @media (max-width: 640px) {
-      .container { width: min(100vw - 20px, 1220px); padding-top: 20px; }
-      .summary { grid-template-columns: 1fr; }
-      .card, .panel-head, .empty, .modal-head, .modal-body { padding-left: 16px; padding-right: 16px; }
-      th, td { padding: 12px; }
-      .pill-group { width: 100%; overflow: auto; }
+    .panel.expanded .recent-table .mobile-optional {
+      display: table-cell;
+    }
+
+    .recent-table {
+      min-width: 620px;
+    }
+
+    .model-table {
+      min-width: 760px;
+    }
+
+    @media (min-width: 768px) {
+      .container {
+        width: min(1220px, calc(100vw - 32px));
+        padding: 28px 0 40px;
+      }
+
+      .hero {
+        padding: 6px 0 28px;
+      }
+
+      .hero-top {
+        flex-direction: row;
+        gap: 16px;
+        margin-bottom: 24px;
+      }
+
+      .hero-actions {
+        width: auto;
+        align-items: center;
+        justify-content: flex-end;
+      }
+
+      .toolbar {
+        flex-direction: row;
+        align-items: center;
+        margin-top: 22px;
+      }
+
+      .pill-group {
+        display: inline-flex;
+        width: auto;
+        border-radius: 999px;
+      }
+
+      .summary {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        margin-bottom: 24px;
+      }
+
+      .card {
+        padding: 20px;
+      }
+
+      .panel-head {
+        flex-direction: row;
+        align-items: center;
+        padding: 20px 22px 14px;
+      }
+
+      .panel-actions {
+        width: auto;
+        justify-content: flex-end;
+      }
+
+      .table-tools {
+        padding: 0 22px 10px;
+      }
+
+      .empty {
+        padding: 24px 22px 30px;
+      }
+
+      .modal-head {
+        padding: 20px 22px 12px;
+      }
+
+      .modal-body {
+        padding: 20px 22px 24px;
+      }
+
+      th, td {
+        padding: 14px 16px;
+      }
+
+      .recent-table .mobile-optional {
+        display: table-cell;
+      }
+
+      .mobile-only {
+        display: none;
+      }
+
+      .recent-table,
+      .model-table {
+        min-width: 100%;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .summary {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 767px) {
+      .button.primary {
+        width: 100%;
+      }
+
+      .timestamp {
+        width: 100%;
+      }
+
+      .table-tools {
+        flex-wrap: wrap;
+      }
+
+      .scroll-indicator {
+        width: 100%;
+      }
     }
   </style>
 </head>
@@ -700,15 +889,18 @@ def build_html(data):
         </article>
       </section>
 
-      <section class="panel">
+      <section class="panel" id="recent-panel">
         <div class="panel-head">
           <div>
             <h2 class="panel-title">Cost by Model</h2>
             <p class="panel-subtitle">Aggregated assistant usage grouped by model for the selected time range.</p>
           </div>
         </div>
+        <div class="table-tools">
+          <div class="scroll-indicator">Swipe to view more columns</div>
+        </div>
         <div class="table-wrap">
-          <table>
+          <table class="model-table">
             <thead>
               <tr>
                 <th>Model</th>
@@ -733,18 +925,24 @@ def build_html(data):
             <h2 class="panel-title">Recent API Calls</h2>
             <p class="panel-subtitle">Newest assistant calls first. Click any prompt to view the full preceding user message.</p>
           </div>
+          <div class="panel-actions">
+            <button class="button ghost mobile-only" id="recent-toggle" type="button" aria-expanded="false">View Full</button>
+          </div>
+        </div>
+        <div class="table-tools">
+          <div class="scroll-indicator">Swipe to view more columns</div>
         </div>
         <div class="table-wrap">
-          <table>
+          <table class="recent-table">
             <thead>
               <tr>
                 <th class="sortable" data-sort-key="timestampMs">Time</th>
                 <th class="sortable" data-sort-key="model">Model</th>
                 <th class="sortable" data-sort-key="input">Input</th>
                 <th class="sortable" data-sort-key="output">Output</th>
-                <th class="sortable" data-sort-key="cacheRead">Cache Read</th>
-                <th class="sortable" data-sort-key="cacheWrite">Cache Write</th>
-                <th class="sortable" data-sort-key="context">Context</th>
+                <th class="sortable mobile-optional" data-sort-key="cacheRead">Cache Read</th>
+                <th class="sortable mobile-optional" data-sort-key="cacheWrite">Cache Write</th>
+                <th class="sortable mobile-optional" data-sort-key="context">Context</th>
                 <th class="sortable" data-sort-key="costTotal">Cost</th>
                 <th>Prompt</th>
               </tr>
@@ -789,7 +987,8 @@ def build_html(data):
     let state = {
       range: "24h",
       sortKey: "timestampMs",
-      sortDirection: "desc"
+      sortDirection: "desc",
+      recentExpanded: false
     };
 
     const fmtInt = new Intl.NumberFormat("en-US");
@@ -934,9 +1133,9 @@ def build_html(data):
           <td>${escapeHtml(record.model)}</td>
           <td class="mono">${fmtInt.format(record.input)}</td>
           <td class="mono">${fmtInt.format(record.output)}</td>
-          <td class="mono">${fmtInt.format(record.cacheRead)}</td>
-          <td class="mono">${fmtInt.format(record.cacheWrite)}</td>
-          <td class="mono">${fmtInt.format(record.context)}</td>
+          <td class="mono mobile-optional">${fmtInt.format(record.cacheRead)}</td>
+          <td class="mono mobile-optional">${fmtInt.format(record.cacheWrite)}</td>
+          <td class="mono mobile-optional">${fmtInt.format(record.context)}</td>
           <td class="mono">${fmtCost.format(record.costTotal)}</td>
           <td><button class="prompt-button" type="button" data-index="${index}">${escapeHtml(record.promptShort || "(no prompt)")}</button></td>
         </tr>
@@ -948,6 +1147,25 @@ def build_html(data):
           openModal(record);
         });
       });
+    }
+
+    function syncTableWrapIndicators() {
+      Array.from(document.querySelectorAll(".table-wrap")).forEach((wrap) => {
+        const maxScroll = wrap.scrollWidth - wrap.clientWidth;
+        const atEnd = maxScroll <= 2 || wrap.scrollLeft >= maxScroll - 2;
+        wrap.classList.toggle("scrolled-end", atEnd);
+      });
+    }
+
+    function renderRecentToggle() {
+      const panel = document.getElementById("recent-panel");
+      const button = document.getElementById("recent-toggle");
+      if (!panel || !button) {
+        return;
+      }
+      panel.classList.toggle("expanded", state.recentExpanded);
+      button.textContent = state.recentExpanded ? "Show Less" : "View Full";
+      button.setAttribute("aria-expanded", state.recentExpanded ? "true" : "false");
     }
 
     function renderMeta(records) {
@@ -973,6 +1191,8 @@ def build_html(data):
       renderModelTable(aggregateModels(filtered));
       renderRecentTable(sortRecords(filtered));
       renderMeta(filtered);
+      renderRecentToggle();
+      syncTableWrapIndicators();
 
       Array.from(document.querySelectorAll(".pill")).forEach((pill) => {
         pill.classList.toggle("active", pill.dataset.range === state.range);
@@ -1017,6 +1237,12 @@ def build_html(data):
       window.alert("Re-run: python3 generate-dashboard.py --output dist/index.html\\n\\nThis dashboard is static and refreshes by regenerating dist/index.html from ~/.openclaw/agents/main/sessions/*.jsonl");
     });
 
+    document.getElementById("recent-toggle").addEventListener("click", () => {
+      state.recentExpanded = !state.recentExpanded;
+      renderRecentToggle();
+      syncTableWrapIndicators();
+    });
+
     document.getElementById("modal-close").addEventListener("click", closeModal);
     document.getElementById("modal-backdrop").addEventListener("click", (event) => {
       if (event.target.id === "modal-backdrop") {
@@ -1028,6 +1254,10 @@ def build_html(data):
         closeModal();
       }
     });
+    Array.from(document.querySelectorAll(".table-wrap")).forEach((wrap) => {
+      wrap.addEventListener("scroll", syncTableWrapIndicators, { passive: true });
+    });
+    window.addEventListener("resize", syncTableWrapIndicators);
 
     render();
   </script>
